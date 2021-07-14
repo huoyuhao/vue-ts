@@ -5,7 +5,11 @@ import { wrapperEnv } from './build/utils';
 import { createVitePlugins } from './build/vite/plugin';
 import { createProxy } from './build/vite/proxy';
 
-const path = require('path');
+import { resolve } from 'path';
+
+function pathResolve(dir: string) {
+  return resolve(process.cwd(), '.', dir);
+}
 
 // https://vitejs.dev/config/
 export default ({ command, mode }: ConfigEnv): UserConfig => {
@@ -18,9 +22,12 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
     base: VITE_PUBLIC_PATH,
     publicDir: 'public',
     resolve: {
-      alias: {
-        '@': path.resolve(__dirname, './src'),
-      },
+      alias: [
+        {
+          find: /\/@\//,
+          replacement: pathResolve('src') + '/',
+        },
+      ]
     },
     server: {
       port: VITE_PORT,
@@ -53,6 +60,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       // chunk 大小警告的限制（以 kbs 为单位）
       chunkSizeWarningLimit: 2000,
     },
-    plugins: createVitePlugins(viteEnv, isBuild)
+    // viteEnv, isBuild
+    plugins: createVitePlugins()
   }
 };
