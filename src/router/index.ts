@@ -30,7 +30,7 @@ export const LoginRoute: AppRouteRecordRaw = {
 export const basicRoutes = [LoginRoute, RootRoute, ...routeModuleList];
 
 export const router = createRouter({
-  history: createWebHashHistory(import.meta.env.VITE_PUBLIC_PATH),
+  history: createWebHashHistory(import.meta.env.VITE_PUBLIC_PATH as string),
   routes: basicRoutes as RouteRecordRaw[],
   strict: true,
   scrollBehavior: () => ({ left: 0, top: 0 }),
