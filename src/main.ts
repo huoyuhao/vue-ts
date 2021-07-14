@@ -5,6 +5,9 @@ import { setupStore } from '/@/store';
 import { setupRouter } from '/@/router';
 import { registerGlobComp } from '/@/components/registerGlobComp';
 
+import '/@/assets/css/theme.less';
+import '/@/assets/css/reset.css';
+
 const app = createApp(App)
 setupStore(app);
 setupRouter(app);

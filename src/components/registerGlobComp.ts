@@ -33,7 +33,6 @@ import {
 } from 'ant-design-vue';
 
 import { DownOutlined } from '@ant-design/icons-vue';
-import 'ant-design-vue/dist/antd.css';
 
 message.config({ maxCount: 1, top: '80px' }); // 最大显示数, 超过限制时，最早的消息会被自动关闭
 

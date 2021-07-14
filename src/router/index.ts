@@ -1,3 +1,4 @@
+import type { RouteRecordRaw } from 'vue-router';
 import type { AppRouteRecordRaw, AppRouteModule } from '/@/router/types';
 
 import type { App } from 'vue';
@@ -30,7 +31,7 @@ export const basicRoutes = [LoginRoute, RootRoute, ...routeModuleList];
 
 export const router = createRouter({
   history: createWebHashHistory(import.meta.env.VITE_PUBLIC_PATH),
-  routes: basicRoutes,
+  routes: basicRoutes as RouteRecordRaw[],
   strict: true,
   scrollBehavior: () => ({ left: 0, top: 0 }),
 });
