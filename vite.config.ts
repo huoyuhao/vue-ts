@@ -1,8 +1,9 @@
 import type { UserConfig, ConfigEnv } from 'vite';
-import vue from '@vitejs/plugin-vue';
 
 import { loadEnv } from 'vite'
 import { wrapperEnv } from './build/utils';
+import { createVitePlugins } from './build/vite/plugin';
+import { createProxy } from './build/vite/proxy';
 
 const path = require('path');
 
@@ -11,9 +12,8 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
   const root = process.cwd();
   const env = loadEnv(mode, root);
   const viteEnv = wrapperEnv(env);
-  const { VITE_PORT, VITE_PUBLIC_PATH, VITE_PROXY, } = viteEnv;
+  const { VITE_PORT, VITE_PUBLIC_PATH, VITE_PROXY } = viteEnv;
   const isBuild = command === 'build';
-
   return {
     base: VITE_PUBLIC_PATH,
     publicDir: 'public',
@@ -23,8 +23,10 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       },
     },
     server: {
+      port: VITE_PORT,
       https: false,
       cors: true,
+      proxy: createProxy(VITE_PROXY),
     },
     esbuild: {
       jsxFactory: 'h',
@@ -51,8 +53,6 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       // chunk 大小警告的限制（以 kbs 为单位）
       chunkSizeWarningLimit: 2000,
     },
-    plugins: [
-      vue(),
-    ]
+    plugins: createVitePlugins(viteEnv, isBuild)
   }
 };
