@@ -1,13 +1,13 @@
 <template>
-  <p>test</p>
-  <a-button>test</a-button>
+  <p>test2</p>
+  <a-button>test2</a-button>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'ProductWarehouse',
+  name: 'ProductMaterialParts',
   components: {
   }
 })

@@ -19,22 +19,22 @@ const product: AppRouteModule = {
         title: 'test1-1',
       },
     },
-    // {
-    //   path: 'material',
-    //   name: 'product-material',
-    //   component: () => import('/@/views/product/material.vue'),
-    //   meta: {
-    //     title: 'test1-2',
-    //   },
-    // },
-    // {
-    //   path: 'materialParts',
-    //   name: 'product-materialParts',
-    //   component: () => import('/@/views/product/material-parts.vue'),
-    //   meta: {
-    //     title: 'test1-3',
-    //   },
-    // },
+    {
+      path: 'material',
+      name: 'product-material',
+      component: () => import('/@/views/product/material/index.vue'),
+      meta: {
+        title: 'test1-2',
+      },
+    },
+    {
+      path: 'materialParts',
+      name: 'product-materialParts',
+      component: () => import('/@/views/product/materialParts/index.vue'),
+      meta: {
+        title: 'test1-3',
+      },
+    },
   ],
 };
 

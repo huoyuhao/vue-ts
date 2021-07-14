@@ -12,7 +12,6 @@ Object.keys(modules).forEach((key) => {
   const modList = Array.isArray(mod) ? [...mod] : [mod];
   routeModuleList.push(...modList);
 });
-console.log(routeModuleList);
 export const RootRoute: AppRouteRecordRaw = {
   path: '/',
   name: 'Root',
