@@ -4,6 +4,7 @@ import {
   // Need
   message,
   Alert,
+  Breadcrumb,
   Button,
   Card,
   Checkbox,
@@ -36,10 +37,12 @@ import { DownOutlined } from '@ant-design/icons-vue';
 
 message.config({ maxCount: 1, top: '80px' }); // 最大显示数, 超过限制时，最早的消息会被自动关闭
 
-export function registerGlobComp(app: App) {
+export const registerGlobComp = (app: App) => {
   const Ant = {
     install(app: App) {
       app.component(Alert.name, Alert);
+      app.component(Breadcrumb.name, Breadcrumb);
+      app.component(Breadcrumb.Item.name, Breadcrumb.Item);
       app.component(Button.name, Button);
       app.component(Card.name, Card);
       app.component(Checkbox.name, Checkbox);
