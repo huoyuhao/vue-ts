@@ -14,7 +14,9 @@ const product: AppRouteModule = {
     {
       path: 'warehouse',
       name: 'product-warehouse',
-      component: () => import('/@/views/product/warehouse/index.vue'),
+      component: () => {
+        return import('/@/views/product/warehouse/index.vue');
+      },
       meta: {
         title: 'test1-1',
       },
@@ -22,7 +24,9 @@ const product: AppRouteModule = {
     {
       path: 'material',
       name: 'product-material',
-      component: () => import('/@/views/product/material/index.vue'),
+      component: () => {
+        return import('/@/views/product/material/index.vue');
+      },
       meta: {
         title: 'test1-2',
       },
@@ -30,7 +34,9 @@ const product: AppRouteModule = {
     {
       path: 'materialParts',
       name: 'product-materialParts',
-      component: () => import('/@/views/product/materialParts/index.vue'),
+      component: () => {
+        return import('/@/views/product/materialParts/index.vue');
+      },
       meta: {
         title: 'test1-3',
       },

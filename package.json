@@ -3,26 +3,36 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "lint": "eslint --fix --ext .js --ext .vue --ext .ts ./"
   },
   "dependencies": {
     "@ant-design/icons-vue": "^6.0.1",
     "ant-design-vue": "^2.2.2",
     "axios": "^0.21.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
     "file-loader": "^6.2.0",
     "jest": "^27.0.6",
     "js-cookie": "^2.2.1",
     "lodash": "^4.17.21",
     "pinia": "^2.0.0-beta.5",
+    "prettier": "^2.3.2",
     "vue": "^3.0.5",
     "vue-router": "4.0"
   },
   "devDependencies": {
+    "@tencent/eslint-config-tencent": "^0.15.2",
+    "@typescript-eslint/eslint-plugin": "^4.28.3",
+    "@typescript-eslint/parser": "^4.28.3",
     "@vitejs/plugin-vue": "^1.2.5",
     "@vitejs/plugin-vue-jsx": "^1.1.6",
     "@vue/compiler-sfc": "^3.0.5",
     "cross-env": "^7.0.3",
     "dotenv": "^10.0.0",
+    "eslint": "^7.31.0",
+    "eslint-plugin-babel": "^5.3.1",
+    "eslint-plugin-vue": "^7.14.0",
     "less": "^4.1.1",
     "less-loader": "^10.0.1",
     "typescript": "^4.3.2",

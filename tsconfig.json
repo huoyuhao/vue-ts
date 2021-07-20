@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "outDir": "./lib",
     // target用于指定编译之后的版本目录
     "target": "esnext",
     // module用来指定要使用的模板标准
@@ -14,7 +15,7 @@
     "allowJs": true,
     // 指定jsx代码用于的开发环境:'preserve','react-native',or 'react
     "jsx": "preserve",
-    // socuceMap用来指定编译时是否生成.map文件
+    // sourceMap用来指定编译时是否生成.map文件
     "sourceMap": true,
     "resolveJsonModule": true,
     // 忽略所有的声明文件（ *.d.ts）的类型检查

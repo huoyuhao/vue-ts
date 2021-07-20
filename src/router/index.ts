@@ -4,7 +4,7 @@ import type { AppRouteRecordRaw, AppRouteModule } from '/@/router/types';
 import type { App } from 'vue';
 import { createRouter, createWebHashHistory } from 'vue-router';
 import { PageEnum } from '/@/enums/pageEnum';
-import { clearPending } from "/@/utils/http/pending"
+import { clearPending } from '/@/utils/http/pending';
 
 const modules = import.meta.globEager('./modules/**/*.ts');
 const routeModuleList: AppRouteModule[] = [];
@@ -35,14 +35,16 @@ export const router = createRouter({
   history: createWebHashHistory(import.meta.env.VITE_PUBLIC_PATH as string),
   routes: basicRoutes as RouteRecordRaw[],
   strict: true,
-  scrollBehavior: () => ({ left: 0, top: 0 }),
+  scrollBehavior: () => {
+    return { left: 0, top: 0 };
+  },
 });
 
 router.beforeEach((_to, _from, next) => {
   // 在跳转路由之前，先清除所有的请求
   clearPending();
-  next()
-})
+  next();
+});
 
 // config router
 export function setupRouter(app: App<Element>) {

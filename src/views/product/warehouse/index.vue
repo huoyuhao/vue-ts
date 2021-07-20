@@ -4,23 +4,24 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { GetUserInfo } from "/@/api/sys/user";
+import { defineComponent } from 'vue';
+import { GetUserInfo } from '/@/api/sys/user';
 export default defineComponent({
   name: 'ProductWarehouse',
   components: {
   },
   setup() {
     const test = () => {
-      GetUserInfo().then(data => {
-        console.log(1111,data)
-      }).catch(() => {})
+      GetUserInfo().then((data) => {
+        console.log(1111, data);
+      })
+        .catch(() => {});
     };
     return {
-      test
-    }
+      test,
+    };
   },
-})
+});
 </script>
 
 <style lang="less">

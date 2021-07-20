@@ -7,9 +7,9 @@ enum Api {
   GetPermCode = '/getPermCode',
 }
 
-export function GetUserInfo() {
+export const GetUserInfo = () => {
   return http.request({
     url: Api.GetUserInfo,
-    method: "get",
+    method: 'get',
   });
-}
+};

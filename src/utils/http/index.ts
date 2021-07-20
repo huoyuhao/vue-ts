@@ -1,5 +1,7 @@
-
 // 接口响应通过格式
+import { AxiosPromise } from 'axios';
+import { Interceptors } from './axios';
+import { message } from 'ant-design-vue';
 export interface HttpRequest {
   method: string
   url: string
@@ -12,9 +14,6 @@ export interface HttpResponse {
   detail: any
   msg: string
 }
-import { AxiosPromise } from "axios";
-import { Interceptors } from "./axios";
-import { message } from 'ant-design-vue';
 // 请求配置
 export class HttpServer {
   axios: any;
@@ -28,22 +27,23 @@ export class HttpServer {
       this.axios(config).then((res: HttpResponse) => {
         if (res.code === 0) {
           resolve(res?.detail);
-        } else if (res.code === -2){ // 多次请求取消
+        } else if (res.code === -2) { // 多次请求取消
           console.log('请求多次。');
         } else {
           const msg = res?.msg || '系统繁忙，请稍后重试';
           message.error(msg);
           reject(msg);
         }
-      }).catch((err: any) => {
-        err && err?.msg && message.error(err?.msg);
-        console.log(err);
-        reject(err);
-      });
+      })
+        .catch((err: any) => {
+          err && err?.msg && message.error(err?.msg);
+          console.log(err);
+          reject(err);
+        });
     });
   }
 }
 
-const http = new HttpServer()
+const http = new HttpServer();
 
 export default http;

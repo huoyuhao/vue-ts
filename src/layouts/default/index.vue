@@ -54,11 +54,11 @@ export default defineComponent({
     const collapsed = ref<boolean>(false);
     const containerStyle = computed(() => {
       const width = collapsed.value ? '80px' : '200px';
-      console.log(width)
+      console.log(width);
       return {
-        marginLeft: width
-      }
-    })
+        marginLeft: width,
+      };
+    });
     return {
       containerStyle,
       selectedKeys: ref<string[]>(['1']),

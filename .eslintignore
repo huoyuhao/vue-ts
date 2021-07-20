@@ -1,0 +1,13 @@
+# .eslintignore
+# 旧的不需打包的Js库
+*.min.js
+
+# 其他类型文件
+*.css
+*.jpg
+*.woff
+
+# 测试和打包目录
+/test/
+/dist/
+/mock/

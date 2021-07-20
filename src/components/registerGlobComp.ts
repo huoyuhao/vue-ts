@@ -91,4 +91,4 @@ export const registerGlobComp = (app: App) => {
     },
   };
   app.use(Ant);
-}
+};

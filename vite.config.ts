@@ -1,15 +1,15 @@
 import type { UserConfig, ConfigEnv } from 'vite';
 
-import { loadEnv } from 'vite'
+import { loadEnv } from 'vite';
 import { wrapperEnv } from './build/utils';
 import { createVitePlugins } from './build/vite/plugin';
 import { createProxy } from './build/vite/proxy';
 
 import { resolve } from 'path';
 
-function pathResolve(dir: string) {
+const pathResolve = (dir: string) => {
   return resolve(process.cwd(), '.', dir);
-}
+};
 
 // https://vitejs.dev/config/
 export default ({ command, mode }: ConfigEnv): UserConfig => {
@@ -25,9 +25,9 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       alias: [
         {
           find: /\/@\//,
-          replacement: pathResolve('src') + '/',
+          replacement: `${pathResolve('src')}/`,
         },
-      ]
+      ],
     },
     server: {
       port: VITE_PORT,
@@ -61,6 +61,6 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       chunkSizeWarningLimit: 2000,
     },
     // viteEnv, isBuild
-    plugins: createVitePlugins()
-  }
+    plugins: createVitePlugins(),
+  };
 };
