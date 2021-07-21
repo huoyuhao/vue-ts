@@ -19,7 +19,7 @@ export const RootRoute: AppRouteRecordRaw = {
   path: '/',
   name: 'Root',
   redirect: PageEnum.BASE_HOME,
-  meta: { title: '首页' },
+  meta: { title: '首页', hideMenu: true },
 };
 
 export const LoginRoute: AppRouteRecordRaw = {
@@ -27,7 +27,7 @@ export const LoginRoute: AppRouteRecordRaw = {
   name: 'Login',
   redirect: PageEnum.BASE_HOME,
   // component: () => import('/@/views/sys/login/Login.vue'),
-  meta: { title: '登录' },
+  meta: { title: '登录', hideMenu: true },
 };
 
 export const basicRoutes = [LoginRoute, RootRoute, ...routeModuleList];

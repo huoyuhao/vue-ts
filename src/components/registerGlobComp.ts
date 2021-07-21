@@ -33,7 +33,7 @@ import {
   Upload,
 } from 'ant-design-vue';
 
-import { DownOutlined } from '@ant-design/icons-vue';
+import { DownOutlined, SettingOutlined, MenuUnfoldOutlined, MenuFoldOutlined, AppstoreOutlined } from '@ant-design/icons-vue';
 
 message.config({ maxCount: 1, top: '80px' }); // 最大显示数, 超过限制时，最早的消息会被自动关闭
 
@@ -86,8 +86,12 @@ export const registerGlobComp = (app: App) => {
       app.component(Tabs.TabPane.name, Tabs.TabPane);
       app.component(Tag.name, Tag);
       app.component(TimePicker.name, TimePicker);
-      app.component('DownOutlined', DownOutlined);
       app.component(Upload.name, Upload);
+      app.component('DownOutlined', DownOutlined);
+      app.component('SettingOutlined', SettingOutlined);
+      app.component('MenuUnfoldOutlined', MenuUnfoldOutlined);
+      app.component('MenuFoldOutlined', MenuFoldOutlined);
+      app.component('AppstoreOutlined', AppstoreOutlined);
     },
   };
   app.use(Ant);

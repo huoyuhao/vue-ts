@@ -1,6 +1,6 @@
 /**
  * @description: default layout
  */
-export const LAYOUT = () => {
+export const LAYOUTS = () => {
   return import('/@/layouts/default/index.vue');
 };

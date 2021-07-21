@@ -1,12 +1,25 @@
 <template>
   <a-layout>
     <a-layout-sider class="d-sider" v-model:collapsed="collapsed" :trigger="null" collapsible>
-      <div class="d-logo" />
-      <a-menu theme="dark" mode="inline" v-model:selectedKeys="selectedKeys">
-        <a-menu-item key="1">
-          <user-outlined />
-          <span>nav 1</span>
-        </a-menu-item>
+      <div class="d-logo">放置logo图片</div>
+      <a-menu theme="dark" mode="inline" v-model:selectedKeys="selectedKeys"
+    v-model:openKeys="openKeys" @click="clickMenu">
+        <template v-for="subItem in menu">
+          <template v-if="!subItem.meta.hideMenu">
+            <a-sub-menu v-if="subItem.children && subItem.children.length > 0" :key="subItem.name">
+              <template #icon v-if="subItem.meta && subItem.meta.icon">
+                <component :is="subItem.meta.icon"></component>
+              </template>
+              <template #title>{{ subItem.meta.title }}</template>
+              <template v-for="menuItem in subItem.children">
+                <template v-if="!menuItem.meta.hideMenu">
+                  <a-menu-item :key="menuItem.name">{{ menuItem.meta.title }}</a-menu-item>
+                </template>
+              </template>
+            </a-sub-menu>
+            <a-menu-item v-else :key="subItem.name">{{ subItem.meta.title }}</a-menu-item>
+          </template>
+        </template>
       </a-menu>
     </a-layout-sider>
     <a-layout class="d-container" :style="containerStyle">
@@ -19,12 +32,10 @@
           />
           <menu-fold-outlined v-else class="d-trigger" @click="() => (collapsed = !collapsed)" />
           <a-breadcrumb class="d-breadcrumb">
-            <a-breadcrumb-item>Home</a-breadcrumb-item>
-            <a-breadcrumb-item>List</a-breadcrumb-item>
-            <a-breadcrumb-item>App</a-breadcrumb-item>
+            <a-breadcrumb-item>首页</a-breadcrumb-item>
+            <a-breadcrumb-item v-for="item in breadcrumb" :key="item.name">{{ item.title }}</a-breadcrumb-item>
           </a-breadcrumb>
         </div>
-
         <div class="d-header-right">admin</div>
       </a-layout-header>
       <a-layout-content class="d-content">
@@ -34,30 +45,58 @@
   </a-layout>
 </template>
 <script lang="ts">
-import {
-  UserOutlined,
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
-} from '@ant-design/icons-vue';
-import { defineComponent, ref, computed } from 'vue';
+import { defineComponent, computed, reactive, toRefs, watchEffect } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { basicRoutes } from '/@/router/index';
 export default defineComponent({
+  name: 'DLayout',
   components: {
-    UserOutlined,
-    MenuUnfoldOutlined,
-    MenuFoldOutlined,
   },
   setup() {
-    const collapsed = ref<boolean>(false);
+    const route = useRoute();
+    const router = useRouter();
+    const state = reactive({
+      breadcrumb: [] as { name: string, title: string } [],
+      selectedKeys: [] as string [],
+      collapsed: false,
+      openKeys: [] as string [],
+    });
     const containerStyle = computed(() => {
-      const width = collapsed.value ? '80px' : '200px';
+      const width = state.collapsed ? '80px' : '200px';
       return {
         marginLeft: width,
       };
     });
+    const clickMenu = ({ key }: { key: string}) => {
+      router.push({ name: key });
+    };
+    const menu = [...basicRoutes];
+
+    watchEffect(() => {
+      const openKeys: string[] = [];
+      const breadcrumb: [] = [];
+      let isMatchRoute = false;
+      let selectedKeys = '';
+      const routeList = [...route.matched];
+      routeList.forEach(({ name, meta }) => {
+        breadcrumb.push({ name, title: meta.title });
+        openKeys.push(String(name));
+        if (!isMatchRoute) {
+          selectedKeys = String(name);
+          if (meta.hideMenu) {
+            isMatchRoute = true;
+          }
+        }
+      });
+      state.selectedKeys = [selectedKeys];
+      state.breadcrumb = breadcrumb;
+      state.openKeys = openKeys;
+    });
     return {
+      ...toRefs(state),
       containerStyle,
-      selectedKeys: ref<string[]>(['1']),
-      collapsed,
+      menu,
+      clickMenu,
     };
   },
 });
@@ -65,8 +104,11 @@ export default defineComponent({
 <style lang="less" scoped>
 @height: 46px;
 .d-logo{
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: @height;
-  background: #333;
+  background: #CCC;
 }
 .d-sider{
   overflow: auto;
