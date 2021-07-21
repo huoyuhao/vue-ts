@@ -36,8 +36,6 @@
 <script lang="ts">
 import {
   UserOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
   MenuUnfoldOutlined,
   MenuFoldOutlined,
 } from '@ant-design/icons-vue';
@@ -45,8 +43,6 @@ import { defineComponent, ref, computed } from 'vue';
 export default defineComponent({
   components: {
     UserOutlined,
-    VideoCameraOutlined,
-    UploadOutlined,
     MenuUnfoldOutlined,
     MenuFoldOutlined,
   },
@@ -54,7 +50,6 @@ export default defineComponent({
     const collapsed = ref<boolean>(false);
     const containerStyle = computed(() => {
       const width = collapsed.value ? '80px' : '200px';
-      console.log(width);
       return {
         marginLeft: width,
       };

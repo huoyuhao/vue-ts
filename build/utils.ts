@@ -2,10 +2,13 @@
 // Read all environment variable configuration files to process.env
 export const wrapperEnv = (envConf: Recordable): ViteEnv => {
   const ret: any = {};
-  Object.keys(envConf).forEach((envName) => {
-    let realName = envConf[envName].replace(/\\n/g, '\n');
-    realName = realName === 'true' ? true : realName === 'false' ? false : realName;
-
+  Object.keys(envConf).forEach((envName:string) => {
+    let realName: any = envConf[envName].replace(/\\n/g, '\n');
+    if (realName === 'true') {
+      realName = true;
+    } else  if (realName === 'false') {
+      realName = true;
+    }
     if (envName === 'VITE_PORT') {
       realName = Number(realName);
     }

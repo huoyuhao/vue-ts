@@ -14,8 +14,7 @@ export default defineComponent({
     const test = () => {
       GetUserInfo().then((data) => {
         console.log(1111, data);
-      })
-        .catch(() => {});
+      });
     };
     return {
       test,

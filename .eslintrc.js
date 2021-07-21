@@ -129,5 +129,6 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': ['error', {
       varsIgnorePattern: 'Taro',
     }],
+    '@typescript-eslint/no-duplicate-imports': [0, { considerQueryString: true }],
   },
 };

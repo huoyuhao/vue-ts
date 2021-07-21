@@ -1,5 +1,6 @@
 import type { UserConfig, ConfigEnv } from 'vite';
 
+// eslint-disable-next-line no-duplicate-imports
 import { loadEnv } from 'vite';
 import { wrapperEnv } from './build/utils';
 import { createVitePlugins } from './build/vite/plugin';

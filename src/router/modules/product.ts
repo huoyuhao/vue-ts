@@ -17,9 +17,7 @@ const product: AppRouteModule = {
       component: () => {
         return import('/@/views/product/warehouse/index.vue');
       },
-      meta: {
-        title: 'test1-1',
-      },
+      meta: { title: '仓库' },
     },
     {
       path: 'material',
@@ -27,9 +25,7 @@ const product: AppRouteModule = {
       component: () => {
         return import('/@/views/product/material/index.vue');
       },
-      meta: {
-        title: 'test1-2',
-      },
+      meta: { title: '物料' },
     },
     {
       path: 'materialParts',
@@ -37,9 +33,7 @@ const product: AppRouteModule = {
       component: () => {
         return import('/@/views/product/materialParts/index.vue');
       },
-      meta: {
-        title: 'test1-3',
-      },
+      meta: { title: '物料件' },
     },
   ],
 };

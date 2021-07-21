@@ -72,10 +72,9 @@ export class Interceptors {
         // }
         return config;
       },
-      (error) => {
+      () => {
         // 错误抛到业务代码
-        error.data = {};
-        error.data.msg = '服务器异常，请联系管理员！';
+        const error = { data: { msg: '服务器异常，请联系管理员！' } };
         return Promise.resolve(error);
       },
     );
@@ -83,7 +82,7 @@ export class Interceptors {
     this.instance.interceptors.response.use((response:AxiosResponse) => {
       removePending(response); // 在请求结束后，移除本次请求
       return response.data;
-    }, (error) => {
+    }, (error: any) => {
       let msg;
       let code = -1;
       if (axios.isCancel(error)) {

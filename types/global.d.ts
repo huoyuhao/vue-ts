@@ -4,7 +4,7 @@ import type {
 } from 'vue';
 
 declare global {
-  declare type Recordable<T = unknown> = Record<string, T>;
+  declare type Recordable<T = any> = Record<string, T>;
 
   declare interface ViteEnv {
     VITE_PORT: number;

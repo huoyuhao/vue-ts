@@ -1,7 +1,8 @@
 import type { RouteRecordRaw } from 'vue-router';
 import type { AppRouteRecordRaw, AppRouteModule } from '/@/router/types';
-
 import type { App } from 'vue';
+
+// eslint-disable-next-line no-duplicate-imports
 import { createRouter, createWebHashHistory } from 'vue-router';
 import { PageEnum } from '/@/enums/pageEnum';
 import { clearPending } from '/@/utils/http/pending';
@@ -47,6 +48,6 @@ router.beforeEach((_to, _from, next) => {
 });
 
 // config router
-export function setupRouter(app: App<Element>) {
+export const setupRouter = (app: App<Element>) => {
   app.use(router);
-}
+};
