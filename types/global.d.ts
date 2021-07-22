@@ -24,6 +24,7 @@ declare global {
   }
 }
 
+declare module 'js-md5';
 declare module 'vue' {
   export type JSXComponent<Props = any> =
     | { new (): ComponentPublicInstance<Props> }

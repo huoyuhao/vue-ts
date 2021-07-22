@@ -74,11 +74,13 @@ export default defineComponent({
 
     watchEffect(() => {
       const openKeys: string[] = [];
-      const breadcrumb: [] = [];
+      const breadcrumb: { name: string, title: string }[] = [];
       let isMatchRoute = false;
       let selectedKeys = '';
       const routeList = [...route.matched];
-      routeList.forEach(({ name, meta }) => {
+      routeList.forEach((routeItem) => {
+        const { meta } = routeItem;
+        const name = String(routeItem.name);
         breadcrumb.push({ name, title: meta.title });
         openKeys.push(String(name));
         if (!isMatchRoute) {
