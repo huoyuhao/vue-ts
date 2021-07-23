@@ -36,14 +36,6 @@
               </a-button>
             </a-col>
             <a-col>
-              <a-button type="dashed" shape="round" v-if="setting" @click="colsSetting">
-                <template #icon>
-                  <SettingOutlined />
-                  显示设置
-                </template>
-              </a-button>
-            </a-col>
-            <a-col>
               <slot name="final"></slot>
             </a-col>
           </a-row>
@@ -73,27 +65,18 @@
         <slot :name="item" v-bind="data" />
       </template>
     </a-table>
-    <d-setting v-model:visible="settingModel" :sourceCols="sourceCols" :initCols="initCols" @getSetting="getSetting">
-    </d-setting>
   </div>
 </template>
 <script lang="ts">
-import { SettingOutlined, CloudDownloadOutlined, SearchOutlined } from '@ant-design/icons-vue';
-import { defineComponent, reactive, toRefs, computed, watchEffect, watch, ref, onMounted } from 'vue';
+import { CloudDownloadOutlined, SearchOutlined } from '@ant-design/icons-vue';
+import { defineComponent, reactive, toRefs, computed, watchEffect, watch, ref, onMounted, PropType } from 'vue';
 import { useRoute } from 'vue-router';
 import { sortArrByKey } from '/@/utils/fun/common';
-import DSetting from '@/components/table/setting.vue';
 import XLSX from 'xlsx';
-import md5 from 'js-md5';
 
 export default defineComponent({
   name: 'DTable',
-  components: {
-    CloudDownloadOutlined,
-    SettingOutlined,
-    SearchOutlined,
-    DSetting,
-  },
+  components: { CloudDownloadOutlined, SearchOutlined },
   props: {
     rowKey: {
       type: [String, Function],
@@ -118,11 +101,6 @@ export default defineComponent({
       type: Boolean,
       default: true,
     },
-    setting: {
-      // 显示设置，可能传入Boolean、Array：Boolean表示开启设置但没有初始化；Array表述开启设置并有初始化；
-      type: [Boolean, Array],
-      default: false,
-    },
     showHeader: {
       type: Boolean,
       default: true,
@@ -132,10 +110,20 @@ export default defineComponent({
       default: false,
     },
     rowSelection: Object,
-    columns: Array,
-    dataSource: Array,
-    mergeKey: {
+    columns: {
+      type: Array as PropType<any[]>,
+      default: () => {
+        return [];
+      },
+    },
+    dataSource: {
       type: Array,
+      default: () => {
+        return [];
+      },
+    },
+    mergeKey: {
+      type: Array as PropType<string[]>,
       default: () => {
         return [];
       },
@@ -143,12 +131,11 @@ export default defineComponent({
   },
   setup(props, { slots, emit }) {
     const route = useRoute();
-    const searchInput = ref('');
+    const searchInput = ref<string>('');
     const state = reactive({
-      dataList: [],
-      currentTable: null,
+      dataList: [] as any[],
+      currentTable: [] as any[],
       isMerge: props.mergeKey?.length > 0, // 是否合并
-      settingCols: props.columns,
     });
     state.dataList = props.dataSource;
     // 分页设置
@@ -160,22 +147,19 @@ export default defineComponent({
         showSizeChanger: true,
         pageSize: 10,
         pageSizeOptions: ['10', '20', '100'],
-        showTotal: (total, range) => {
+        showTotal: (total:number, range:number[]) => {
           return `显示${range[0]}-${range[1]}  总计 ${total} 条数据   `;
         },
       };
     });
     // ant-table组件分页、排序、筛选变化时触发
-    const change = (pagination, _filters, sorter, { currentDataSource }) => {
+    const change = ({ current, pageSize }: { current: number, pageSize: number}, _filters: any, sorter: string[], { currentDataSource }: { currentDataSource: [] }) => {
       const isSorter = 'order' in sorter;
       if (isSorter) {
         state.isMerge = false; // 使用排序不进行合并
       } else {
         state.isMerge = true;
-        state.currentTable = currentDataSource.splice(
-          (pagination.current - 1) * pagination.pageSize,
-          pagination.pageSize,
-        );
+        state.currentTable = currentDataSource.splice((current - 1) * pageSize, pageSize);
       }
     };
     watch(
@@ -194,7 +178,7 @@ export default defineComponent({
       emit('update:searchValue', searchData);
       let result = [];
       if (!searchData) {
-        result = props.dataSource;
+        result = props.dataSource as [];
       } else {
         let searchMatch = searchData.trim().replace(/\s+/g, '')
           .split(/\+/);
@@ -202,7 +186,7 @@ export default defineComponent({
           // and +
           result = props.dataSource.filter((item) => {
             return searchMatch.every((search) => {
-              return JSON.stringify(Object.values(item)).indexOf(search) > -1;
+              return JSON.stringify(Object.values(item as any)).indexOf(search) > -1;
             });
           });
         } else {
@@ -213,7 +197,7 @@ export default defineComponent({
             .split(/\s+|,|，|；|;/);
           result = props.dataSource.filter((item) => {
             return searchMatch.some((search) => {
-              return JSON.stringify(Object.values(item)).indexOf(search) > -1;
+              return JSON.stringify(Object.values(item as any)).indexOf(search) > -1;
             });
           });
         }
@@ -232,7 +216,7 @@ export default defineComponent({
     );
     onMounted(() => {
       if (route.query.searchTable) {
-        searchInput.value = route.query.searchTable;
+        searchInput.value = String(route.query.searchTable);
         search();
       }
     });
@@ -244,7 +228,7 @@ export default defineComponent({
       let result = state.dataList;
       // 根据merge数组倒序的值依次进行排序
       merge.reverse().forEach((element) => {
-        result = sortArrByKey(result, element);
+        result = sortArrByKey(result, element as string);
       });
       return result;
     });
@@ -260,8 +244,8 @@ export default defineComponent({
       if (!state.isMerge) return null;
       // 因为初始化已经排序，所以根据列表获取连续相同列
       // 比如[a1,a2,a2,a3,a3,a2,a3] => [1,2,0,2,0,1,1]
-      const mergeData = {};
-      props.mergeKey.forEach((key) => {
+      const mergeData = {} as any;
+      props.mergeKey.forEach((key:string) => {
         mergeData[key] = new Array(state.currentTable.length);
       });
       const reverseList = [...state.currentTable].reverse();
@@ -283,12 +267,12 @@ export default defineComponent({
     });
 
     const tableColumns = computed(() => {
-      const column = state.settingCols;
+      const column = props.columns;
       return column.map((element) => {
         const result = { ...element };
         // 处理筛选
         if (result.filter) {
-          const filters = [];
+          const filters: { text: string; value: string; }[] = [];
           const set = new Set();
           tableList.value.forEach((item) => {
             if (item[result.dataIndex]) {
@@ -296,7 +280,7 @@ export default defineComponent({
             }
           });
           // 对筛选列表进行排序
-          const setSort = Array.from(set).sort();
+          const setSort = Array.from(set).sort() as string[];
           setSort.forEach((value) => {
             filters.push({
               text: value,
@@ -305,7 +289,7 @@ export default defineComponent({
           });
           if (set.size > 1) {
             result.filters = filters;
-            result.onFilter = (value, record) => {
+            result.onFilter = (value:string, record:any) => {
               return record[result.dataIndex] === value;
             };
           }
@@ -314,7 +298,7 @@ export default defineComponent({
         // 处理排序sort默认封装
         if (result.sort) {
           if (result.sort === 'string') {
-            result.sorter = (a, b) => {
+            result.sorter = (a : any, b : any) => {
               // 根据JSON之后的字符串大小进行比较
               const str1 = JSON.stringify(a[result.dataIndex] || '').toUpperCase();
               const str2 = JSON.stringify(b[result.dataIndex] || '').toUpperCase();
@@ -323,8 +307,8 @@ export default defineComponent({
               return 0;
             };
           } else if (result.sort === 'number') {
-            result.sorter = (a, b) => {
-              return parseFloat(a[result.dataIndex], 10) - parseFloat(b[result.dataIndex], 10);
+            result.sorter = (a : any, b : any) => {
+              return parseFloat(a[result.dataIndex]) - parseFloat(b[result.dataIndex]);
             };
           }
         }
@@ -333,16 +317,16 @@ export default defineComponent({
           const key = result.mergeKey || result.dataIndex;
           if (props.mergeKey.includes(key)) {
             // 当前是合并列
-            result.customRender = ({ text, index, record }) => {
+            result.customRender = ({ text, index, record }:{ text:any, index:number, record:any }) => {
               const obj = {
                 children: text,
-                props: {},
+                props: {} as { rowSpan: number },
               };
               if (slots[result.dataIndex]) {
-                obj.children = slots[result.dataIndex]({ text, index, record });
+                obj.children = (slots[result.dataIndex] as any)({ text, index, record });
               }
               const mergeIndex = state.currentTable.length - index - 1;
-              obj.props.rowSpan = mergeData.value[key][mergeIndex];
+              obj.props.rowSpan = mergeData.value[key][mergeIndex] as number;
               return obj;
             };
           }
@@ -353,7 +337,7 @@ export default defineComponent({
 
     // 导出excel表格
     const { exportTitle } = props;
-    let exportList = [];
+    let exportList = [] as any[];
     watch(
       tableList,
       () => {
@@ -363,9 +347,9 @@ export default defineComponent({
     );
     const onExport = () => {
       const wb = XLSX.utils.book_new(); // 新建工作簿
-      const header = {};
-      const index = {};
-      const list = [];
+      const header:any = {};
+      const index:any = {};
+      const list: any[] = [];
       let sheet = {};
       tableColumns.value.forEach((item) => {
         if (item.dataIndex !== 'action') {
@@ -374,7 +358,7 @@ export default defineComponent({
         }
       });
       exportList.forEach((item) => {
-        const dataItem = {};
+        const dataItem:any = {};
         Object.keys(header).forEach((key) => {
           dataItem[key] = item[key];
         });
@@ -384,68 +368,11 @@ export default defineComponent({
       XLSX.utils.book_append_sheet(wb, sheet, 'name'); // 工作表添加到工作簿中
       XLSX.writeFile(wb, `${exportTitle}.xlsx`);
     };
-    const expand = (expanded, record) => {
+    const expand = (expanded:any, record:any) => {
       emit('expand', expanded, record);
     };
 
-    // setting相关代码
-    const settingState = reactive({
-      sourceCols: [],
-      initCols: [],
-      settingModel: false,
-    });
-    const getStoreCols = () => {
-      if (store.state.columns.columns[md5(JSON.stringify(props.columns))]) {
-        // 如果本地storage存在则取本地设置
-        settingState.initCols = store.state.columns.columns[md5(JSON.stringify(props.columns))].value;
-        state.settingCols = props.columns.filter((item) => {
-          return settingState.initCols.includes(item.dataIndex);
-        });
-      } else if (Array.isArray(props.setting)) {
-        // 如果本地storage不存在，设置初始化，则取初始化
-        if (
-          props.columns.findIndex((value) => {
-            return value.dataIndex === 'action';
-          }) > -1
-        ) {
-          settingState.initCols = [...props.setting, ...['action']];
-        } else {
-          settingState.initCols = props.setting;
-        }
-        state.settingCols = props.columns.filter((item) => {
-          return settingState.initCols.includes(item.dataIndex);
-        });
-      } else {
-        state.settingCols = props.columns;
-      }
-    };
-    const colsSetting = () => {
-      settingState.sourceCols = props.columns;
-      settingState.settingModel = true;
-      getStoreCols();
-    };
-    const store = useStore();
-    watch(
-      () => {
-        return props.columns;
-      },
-      () => {
-        getStoreCols();
-      },
-      { immediate: true },
-    );
-    const getSetting = (e) => {
-      state.settingCols = e;
-      const storeColumns = {};
-      storeColumns.key = md5(JSON.stringify(props.columns));
-      storeColumns.value = state.settingCols.map((item) => {
-        return item.dataIndex;
-      });
-      store.commit('columns/setColumns', storeColumns);
-    };
-
     return {
-      ...toRefs(settingState),
       ...toRefs(props),
       searchInput,
       tableList,
@@ -456,8 +383,6 @@ export default defineComponent({
       expand,
       search,
       onExport,
-      colsSetting,
-      getSetting,
     };
   },
 });
