@@ -1,28 +1,28 @@
 <template>
-<d-card title="test">
-  <p>test</p>
-  <a-button @click="test">test</a-button>
-  </d-card>
+  <d-tab-view :list="list" :active="active"></d-tab-view>
 </template>
-
-<script lang="ts">
-import { defineComponent } from 'vue';
-import { GetWarehouse } from '/@/api/product/warehouse';
+<script>
+import { defineComponent, watchEffect, ref } from 'vue';
+import { useRoute } from 'vue-router';
 export default defineComponent({
-  name: 'ProductWarehouse',
+  name: 'DProductWarehouse',
   components: {
   },
   setup() {
-    const test = () => {
-      GetWarehouse().then((data: any) => {
-        console.log(1111, data);
-      });
-    };
+    const route = useRoute();
+    const list = [
+      { key: 'index', name: '仓库', route: '/product/warehouse/index', file: import('./warehouse.vue') },
+      { key: 'type', name: '仓库类型', route: '/product/warehouse/type', file: import('./warehouse-type.vue') },
+    ];
+    const active = ref('');
+    watchEffect(() => {
+      active.value = route.params?.type;
+    });
     return {
-      test,
+      list,
+      active,
     };
   },
 });
 </script>
-
-<style lang="less"></style>
+<style lang="less" scoped></style>

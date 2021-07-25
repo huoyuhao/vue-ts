@@ -31,7 +31,7 @@ export const CreateWarehouse = () => {
 
 export const GetWarehouseType = () => {
   return http.request({
-    url: Api.WarehouseType,
+    url: `${Api.WarehouseType}?warehouseTypeId=1`,
     method: 'get',
   });
 };
@@ -41,10 +41,11 @@ export const UpdateWarehouseType = () => {
     method: 'put',
   });
 };
-export const DeleteWarehouseType = () => {
+export const DeleteWarehouseType = (data: any) => {
   return http.request({
     url: Api.WarehouseType,
     method: 'delete',
+    data,
   });
 };
 export const CreateWarehouseType = () => {

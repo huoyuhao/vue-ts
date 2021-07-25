@@ -51,10 +51,6 @@ export default defineComponent({
       if (componentObj[current.value.key]) component.value = componentObj[current.value.key];
     });
     const change = (item) => {
-      if (item.url) {
-        // 如果是外链
-        return (location.href = `${location.protocol}//${location.hostname}${item.url}`);
-      }
       return router.push({ path: item.route, query: route.query });
     };
     return {

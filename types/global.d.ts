@@ -23,6 +23,7 @@ declare global {
     VITE_GENERATE_UI: string;
   }
 }
+declare module 'qs'
 declare module 'vue' {
   export type JSXComponent<Props = any> =
     | { new (): ComponentPublicInstance<Props> }

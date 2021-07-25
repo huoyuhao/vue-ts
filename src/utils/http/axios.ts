@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosInstance } from 'axios';
 // import { setToken, getToken, getTokenKey, removeToken, } from "./cookie";
+import qs from 'qs';
 
 import { addPending, removePending } from './pending';
 
@@ -54,8 +55,13 @@ export class Interceptors {
       withCredentials: true,
       headers: {
         'X-Requested-With': 'XMLHttpRequest',
-        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
       },
+      transformRequest: [
+        function (data) {
+          return qs.stringify(data);
+        },
+      ],
     });
     this.setupInterceptors();
   }

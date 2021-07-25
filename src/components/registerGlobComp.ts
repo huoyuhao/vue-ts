@@ -35,7 +35,8 @@ import {
 // 全局注册基础组件
 import DCard from './card/index.vue';
 import DTable from './table/index.vue';
-// import DTabs from './tabs/index.vue';
+import DTabs from './tabs/index.vue';
+import DTabView from './tabs/tabs-views.vue';
 // import DTabPane from './tabs/tab-pane.vue';
 
 import { DownOutlined, SettingOutlined, MenuUnfoldOutlined, MenuFoldOutlined, AppstoreOutlined } from '@ant-design/icons-vue';
@@ -102,6 +103,7 @@ export const registerGlobComp = (app: App) => {
   app.use(Ant);
   app.component('DCard', DCard);
   app.component('DTable', DTable);
-  // app.component('DTabs', DTabs);
+  app.component('DTabs', DTabs);
+  app.component('DTabView', DTabView);
   // app.component('DTabPane', DTabPane);
 };

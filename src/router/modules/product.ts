@@ -6,14 +6,14 @@ const product: AppRouteModule = {
   path: '/product',
   name: 'product',
   component: LAYOUTS,
-  redirect: '/product/warehouse',
+  redirect: '/product/warehouse/index',
   meta: {
     title: '物料管理',
     icon: 'AppstoreOutlined',
   },
   children: [
     {
-      path: 'warehouse',
+      path: 'warehouse/:type',
       name: 'product-warehouse',
       component: import('/@/views/product/warehouse/index.vue'),
       meta: { title: '仓库' },
