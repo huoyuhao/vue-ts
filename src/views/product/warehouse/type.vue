@@ -42,18 +42,18 @@ import { type } from './config';
 import DAdd from './add-type.vue';
 
 export default defineComponent({
-  name: 'DProductMaterialType',
+  name: 'DProductWarehouseType',
   components: { DAdd },
   setup() {
     const state = reactive({
-      title: '物料类型',
+      title: '仓库类型',
       loading: false,
       data: [],
       rowKey: '',
       showModal: false,
       formData: null,
     });
-    const api = '/material/type';
+    const api = '/warehouse/type';
 
     const columns = [];
     type.forEach((item) => {

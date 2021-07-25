@@ -10,22 +10,13 @@
   >
     <a-form :label-col="{ span: 6 }" :wrapper-col="{ span: 14 }">
       <template v-for="item in list">
-        <a-form-item v-if="item.dataIndex === 'materialTypeId'" :key="item.dataIndex" :label="item.title" v-bind="validateInfos[item.dataIndex]">
+        <a-form-item v-if="item.dataIndex === 'warehouseTypeId'" :key="item.dataIndex" :label="item.title" v-bind="validateInfos[item.dataIndex]">
           <a-select
             v-model:value="formItem[item.dataIndex]"
             placeholder="请选择"
             show-search
             option-filter-prop="label"
             :options="dataType"
-          />
-        </a-form-item>
-        <a-form-item v-else-if="item.dataIndex === 'materialUnitId'" :key="item.dataIndex" :label="item.title" v-bind="validateInfos[item.dataIndex]">
-          <a-select
-            v-model:value="formItem[item.dataIndex]"
-            placeholder="请选择"
-            show-search
-            option-filter-prop="label"
-            :options="dataUnit"
           />
         </a-form-item>
         <a-form-item v-else-if="!item.hideForm" :key="item.dataIndex" :label="item.title" v-bind="validateInfos[item.dataIndex]">
@@ -43,7 +34,7 @@ import { list } from './config';
 import { Form } from 'ant-design-vue';
 
 export default defineComponent({
-  name: 'DAddMaterialData',
+  name: 'DAddWarehouseData',
   components: {},
   props: {
     visible: {
@@ -64,7 +55,7 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
-    const api = '/material';
+    const api = '/warehouse';
     const formItem = reactive({});
     const ruleValidate = reactive({});
 
@@ -81,17 +72,10 @@ export default defineComponent({
     const { visibleModal, close, submit } = addFun(toRefs(props), emit, { resetFields, validate }, { formItem, api });
 
     const dataType = ref([]);
-    const dataUnit = ref([]);
     const queryType = () => {
-      product({ api: '/material/type', method: 'get' }).then((res) => {
+      product({ api: '/warehouse/type', method: 'get' }).then((res) => {
         dataType.value = res.map((item) => {
-          return { value: item.materialTypeId, label: item.materialTypeName };
-        });
-      })
-        .catch();
-      product({ api: '/material/unit', method: 'get' }).then((res) => {
-        dataUnit.value = res.map((item) => {
-          return { value: item.materialUnitId, label: item.materialUnitName };
+          return { value: item.warehouseTypeId, label: item.warehouseTypeName };
         });
       })
         .catch();
@@ -99,7 +83,6 @@ export default defineComponent({
     queryType();
     return {
       dataType,
-      dataUnit,
       list,
       formItem,
       visibleModal,

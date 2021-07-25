@@ -42,18 +42,18 @@ import { list } from './config';
 import DAdd from './add-data.vue';
 
 export default defineComponent({
-  name: 'DProductMaterialData',
+  name: 'DProductWarehouseData',
   components: { DAdd },
   setup() {
     const state = reactive({
-      title: '物料',
+      title: '仓库',
       loading: false,
       data: [],
       rowKey: '',
       showModal: false,
       formData: null,
     });
-    const api = '/material';
+    const api = '/warehouse';
 
     const columns = [];
     list.forEach((item) => {

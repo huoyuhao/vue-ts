@@ -1,7 +1,7 @@
 <template>
   <d-tab-view :list="list" :active="active"></d-tab-view>
 </template>
-<script>
+<script lang="ts">
 import { defineComponent, watchEffect, ref } from 'vue';
 import { useRoute } from 'vue-router';
 export default defineComponent({
@@ -11,12 +11,12 @@ export default defineComponent({
   setup() {
     const route = useRoute();
     const list = [
-      { key: 'index', name: '仓库', route: '/product/warehouse/index', file: import('./warehouse.vue') },
-      { key: 'type', name: '仓库类型', route: '/product/warehouse/type', file: import('./warehouse-type.vue') },
+      { key: 'data', name: '仓库', route: '/product/warehouse/data', file: import('./data.vue') },
+      { key: 'type', name: '仓库类型', route: '/product/warehouse/type', file: import('./type.vue') },
     ];
     const active = ref('');
     watchEffect(() => {
-      active.value = route.params?.type;
+      active.value = route.params?.type as string;
     });
     return {
       list,

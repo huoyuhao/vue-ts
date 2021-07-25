@@ -13,7 +13,7 @@ export default defineComponent({
     const list = [
       { key: 'data', name: '物料', route: '/product/material/data', file: import('./data.vue') },
       { key: 'type', name: '物料类型', route: '/product/material/type', file: import('./type.vue') },
-      { key: 'unite', name: '物料单位', route: '/product/material/unite', file: import('./unite.vue') },
+      { key: 'unit', name: '物料单位', route: '/product/material/unit', file: import('./unit.vue') },
     ];
     const active = ref('');
     watchEffect(() => {

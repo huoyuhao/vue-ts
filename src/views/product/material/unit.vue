@@ -34,29 +34,29 @@
     @update="update"
   />
 </template>
-<script>
+<script lang="ts">
 import { defineComponent, reactive, toRefs } from 'vue';
 import { product } from '/@/api/product/index';
 import { deleteFun } from '/@/utils/operate/index';
-import { list } from './config';
-import DAdd from './add-data.vue';
+import { unit } from './config';
+import DAdd from './add-unit.vue';
 
 export default defineComponent({
-  name: 'DProductMaterialData',
+  name: 'DProductMaterialUnit',
   components: { DAdd },
   setup() {
     const state = reactive({
-      title: '物料',
+      title: '物料单位',
       loading: false,
       data: [],
       rowKey: '',
       showModal: false,
       formData: null,
     });
-    const api = '/material';
+    const api = '/material/unit';
 
     const columns = [];
-    list.forEach((item) => {
+    unit.forEach((item) => {
       const { title, dataIndex, rowKey, hideTable } = item;
       if (rowKey) {
         state.rowKey = dataIndex;
