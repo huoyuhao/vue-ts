@@ -56,7 +56,7 @@ export default defineComponent({
     ];
     const query = () => {
       state.loading = true;
-      GetUserInfo().then((res) => {
+      GetWarehouseType().then((res) => {
         state.loading = false;
         res = {
           code: 0,

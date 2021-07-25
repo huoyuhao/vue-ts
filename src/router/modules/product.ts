@@ -6,7 +6,7 @@ const product: AppRouteModule = {
   path: '/product',
   name: 'product',
   component: LAYOUTS,
-  redirect: '/product/warehouse/index',
+  redirect: '/product/material/type',
   meta: {
     title: '物料管理',
     icon: 'AppstoreOutlined',
@@ -19,7 +19,7 @@ const product: AppRouteModule = {
       meta: { title: '仓库' },
     },
     {
-      path: 'material',
+      path: 'material/:type',
       name: 'product-material',
       component: import('/@/views/product/material/index.vue'),
       meta: { title: '物料' },

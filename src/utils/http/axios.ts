@@ -55,13 +55,8 @@ export class Interceptors {
       withCredentials: true,
       headers: {
         'X-Requested-With': 'XMLHttpRequest',
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+        'Content-Type': 'application/json;',
       },
-      transformRequest: [
-        function (data) {
-          return qs.stringify(data);
-        },
-      ],
     });
     this.setupInterceptors();
   }

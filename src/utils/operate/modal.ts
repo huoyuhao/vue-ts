@@ -3,7 +3,7 @@ import { Modal } from 'ant-design-vue';
 import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
 
 export const modalFun = () => {
-  const confirmModal = ({ title, content, width } :{title:string, content:any, width:string}, confirm:any, cancel:any) => {
+  const confirmModal = ({ title, content, width } :{title:string, content:any, width?:string}, confirm:any, cancel?:any) => {
     Modal.confirm({
       title: title || '提示',
       icon: createVNode(ExclamationCircleOutlined),
