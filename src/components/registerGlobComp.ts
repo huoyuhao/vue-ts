@@ -14,6 +14,7 @@ import {
   Dropdown,
   Form,
   Input,
+  InputNumber,
   Layout,
   Menu,
   Modal,
@@ -64,6 +65,7 @@ export const registerGlobComp = (app: App) => {
       app.component(Input.name, Input);
       app.component('a-textarea', Input.TextArea);
       app.component(Input.Search.name, Input.Search);
+      app.component(InputNumber.name, InputNumber);
       app.component(Layout.name, Layout);
       app.component(Layout.Header.name, Layout.Header);
       app.component(Layout.Sider.name, Layout.Sider);

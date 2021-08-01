@@ -66,7 +66,9 @@ export const addFun = (props: any, emit: any, { resetFields, validate }: { reset
             // message.error(`${text}失败，请重试!`);
           });
       })
-      .catch(() => {});
+      .catch((e) => {
+        console.log(e);
+      });
   };
   return {
     visibleModal,

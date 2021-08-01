@@ -44,7 +44,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       preprocessorOptions: {
         less: {
           // color - 全局默认主题颜色； width - 默认页面最小宽度
-          additionalData: '@color: #0960BD;@width: 1366px;',
+          additionalData: '@color: #293146;@width: 1366px;',
           javascriptEnabled: true,
         },
       },

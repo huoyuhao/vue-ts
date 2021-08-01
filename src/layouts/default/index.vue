@@ -13,10 +13,12 @@
               <template #title>{{ subItem.meta.title }}</template>
               <template v-for="menuItem in subItem.children">
                 <template v-if="!menuItem.meta.hideMenu">
-                  <a-menu-item :key="menuItem.name">{{ menuItem.meta.title }}</a-menu-item>
+                  <a-menu-item v-if="menuItem.meta.redirect" :key="menuItem.meta.redirect">{{ menuItem.meta.title }}</a-menu-item>
+                  <a-menu-item v-else :key="menuItem.name">{{ menuItem.meta.title }}</a-menu-item>
                 </template>
               </template>
             </a-sub-menu>
+            <a-menu-item v-else-if="subItem.meta.redirect" :key="subItem.redirect">{{ subItem.meta.title }}</a-menu-item>
             <a-menu-item v-else :key="subItem.name">{{ subItem.meta.title }}</a-menu-item>
           </template>
         </template>
@@ -68,7 +70,11 @@ export default defineComponent({
       };
     });
     const clickMenu = ({ key }: { key: string}) => {
-      router.push({ name: key });
+      if (/\//.test(key)) {
+        router.push({ path: key });
+      } else {
+        router.push({ name: key });
+      }
     };
     const menu = [...basicRoutes];
 
