@@ -66,7 +66,7 @@ export const addFun = (props: any, emit: any, { resetFields, validate }: { reset
             // message.error(`${text}失败，请重试!`);
           });
       })
-      .catch((e) => {
+      .catch((e: any) => {
         console.log(e);
       });
   };

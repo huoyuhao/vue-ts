@@ -38,7 +38,21 @@
             <a-breadcrumb-item v-for="item in breadcrumb" :key="item.name">{{ item.title }}</a-breadcrumb-item>
           </a-breadcrumb>
         </div>
-        <div class="d-header-right">admin</div>
+        <div class="d-header-right">
+           <a-dropdown>
+            <a class="ant-dropdown-link" @click.prevent>
+              Admin
+              <DownOutlined />
+            </a>
+            <template #overlay>
+              <a-menu>
+                <a-menu-item>
+                  <a @click="loginOut">退出登陆</a>
+                </a-menu-item>
+              </a-menu>
+            </template>
+          </a-dropdown>
+        </div>
       </a-layout-header>
       <a-layout-content class="d-content">
         <router-view />
@@ -50,6 +64,7 @@
 import { defineComponent, computed, reactive, toRefs, watchEffect } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { basicRoutes } from '/@/router/index';
+import { removeToken } from '/@/utils/http/auth';
 export default defineComponent({
   name: 'DLayout',
   components: {
@@ -100,11 +115,16 @@ export default defineComponent({
       state.breadcrumb = breadcrumb;
       state.openKeys = openKeys;
     });
+    const loginOut = () => {
+      removeToken();
+      router.push({ name: 'login' });
+    };
     return {
       ...toRefs(state),
       containerStyle,
       menu,
       clickMenu,
+      loginOut,
     };
   },
 });

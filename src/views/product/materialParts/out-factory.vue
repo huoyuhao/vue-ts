@@ -49,7 +49,6 @@ export default defineComponent({
     });
     const query = () => {
       product({ api: '/material', method: 'get' }).then((res) => {
-        console.log(res);
         state.materialArr = res.map((item) => {
           return { value: item.materialId, label: item.materialName };
         });

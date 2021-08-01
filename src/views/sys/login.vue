@@ -20,7 +20,7 @@
 <script lang="ts">
 import { defineComponent, reactive, ref, toRefs } from 'vue';
 import { sys } from '/@/api/sys/index';
-import { useRoute } from 'vue-router';
+import { useRouter } from 'vue-router';
 import { setToken } from '/@/utils/http/auth';
 
 export default defineComponent({
@@ -28,7 +28,7 @@ export default defineComponent({
   components: {
   },
   setup() {
-    const route = useRoute();
+    const router = useRouter();
     const formRef = ref();
     const state = reactive({
       loading: false,
@@ -44,6 +44,7 @@ export default defineComponent({
         state.loading = false;
         const { token } = res;
         setToken(token);
+        router.push({ name: 'home' });
       })
         .catch();
     };
