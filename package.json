@@ -16,14 +16,12 @@
     "jest": "^27.0.6",
     "js-cookie": "^2.2.1",
     "lodash": "^4.17.21",
-    "pinia": "^2.0.0-beta.5",
     "prettier": "^2.3.2",
     "vue": "^3.0.5",
     "vue-router": "4.0",
     "xlsx": "^0.16.9"
   },
   "devDependencies": {
-    "@tencent/eslint-config-tencent": "^0.15.2",
     "@types/js-md5": "^0.4.3",
     "@types/qs": "^6.9.7",
     "@typescript-eslint/eslint-plugin": "^4.28.3",

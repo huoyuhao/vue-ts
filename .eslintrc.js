@@ -8,7 +8,6 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:vue/essential',
-    '@tencent/eslint-config-tencent',
     'plugin:@typescript-eslint/recommended',
   ],
   parserOptions: {
