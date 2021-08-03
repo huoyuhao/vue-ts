@@ -4,7 +4,7 @@
       :loading="loading"
       :columns="columns"
       :data-source="data"
-      :rowKey="(record, index) => index"
+      :rowKey="(_record, index) => index"
       :isSearch="true"
     >
       <template #header>

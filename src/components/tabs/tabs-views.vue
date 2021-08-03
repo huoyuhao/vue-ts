@@ -1,6 +1,6 @@
 <template>
-  <template v-if="list.length > 0">
-    <d-tab-list :data="list" :activeKey="current.key" @change="change" />
+  <template v-if="list && list.length > 0">
+    <d-tab-list :data="list" :activeKey="current && current.key" @change="change" />
     <template v-if="keepAlive">
       <keep-alive>
         <component :is="component"></component>
@@ -21,7 +21,11 @@ export default defineComponent({
   components: { DTabList },
   props: {
     list: {
+      required: true,
       type: Array,
+      default: () => {
+        return [];
+      },
     },
     active: {
       type: String,

@@ -2,7 +2,7 @@
   <ul class="d-tab">
     <li
       v-for="item in data"
-      :key="item.key"
+      :key="item && item.key"
       :class="['d-tab-item', `d-tab-${size}`, { active: item.key === activeKey }]"
       @click="clickTab(item)"
     >
@@ -12,14 +12,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, toRefs, PropType } from 'vue';
+import { defineComponent, toRefs } from 'vue';
 import type { tabItem } from './type';
 
 export default defineComponent({
   name: 'DTabList',
   props: {
     data: {
-      type: Array as PropType<tabItem[]>,
+      type: Array,
     },
     activeKey: {
       type: String,

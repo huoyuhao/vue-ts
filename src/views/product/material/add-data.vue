@@ -98,6 +98,7 @@ export default defineComponent({
     };
     queryType();
     return {
+      ...toRefs(props),
       dataType,
       dataUnit,
       list,

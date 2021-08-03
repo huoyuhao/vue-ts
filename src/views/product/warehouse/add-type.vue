@@ -61,6 +61,7 @@ export default defineComponent({
     const { visibleModal, close, submit } = addFun(toRefs(props), emit, { resetFields, validate }, { formItem, api });
 
     return {
+      ...toRefs(props),
       type,
       formItem,
       visibleModal,
