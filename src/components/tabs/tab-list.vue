@@ -1,9 +1,9 @@
 <template>
   <ul class="d-tab">
     <li
-      v-for="item in data"
-      :key="item && item.key"
-      :class="['d-tab-item', `d-tab-${size}`, { active: item.key === activeKey }]"
+      v-for="item in list"
+      :key="item.key"
+      :class="['d-tab-item', `d-tab-${size}`, { active: item?.key === activeKey }]"
       @click="clickTab(item)"
     >
       {{ item.name }}
@@ -11,9 +11,8 @@
   </ul>
 </template>
 
-<script lang="ts">
-import { defineComponent, toRefs } from 'vue';
-import type { tabItem } from './type';
+<script>
+import { computed, defineComponent, toRefs } from 'vue';
 
 export default defineComponent({
   name: 'DTabList',
@@ -30,11 +29,18 @@ export default defineComponent({
     },
   },
   setup(props, context) {
-    const clickTab = (item: tabItem) => {
+    const clickTab = (item) => {
       context.emit('change', item);
     };
+    const list = computed(() => {
+      return props.data.map((item) => {
+        const { key, name } = item;
+        return { key, name };
+      });
+    });
     return {
       ...toRefs(props),
+      list,
       clickTab,
     };
   },

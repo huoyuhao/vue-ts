@@ -4,7 +4,7 @@
       :loading="loading"
       :columns="columns"
       :data-source="data"
-      :rowKey="(_record, index) => index"
+      :rowKey="rowKey"
       :isSearch="true"
     >
       <template #header>
@@ -30,7 +30,7 @@
   <d-add
     v-model:visible="showModal"
     :form-data="formData"
-    :is-modify="Boolean(formData && formData[rowKey])"
+    :is-modify="Boolean(formData[rowKey])"
     @update="update"
   />
 </template>
@@ -49,9 +49,9 @@ export default defineComponent({
       title: '物料',
       loading: false,
       data: [],
-      rowKey: '',
+      rowKey: 'materialId',
       showModal: false,
-      formData: null,
+      formData: {},
     });
     const api = '/material';
 

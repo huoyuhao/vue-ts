@@ -24,6 +24,7 @@
     "experimentalDecorators": true,
     // 若有未使用的局部变量则抛错
     "noUnusedLocals": true,
+    "suppressImplicitAnyIndexErrors": true,
     // 若有未使用的参数则抛错
     "noUnusedParameters": true,
     "skipLibCheck": true,

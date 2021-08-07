@@ -6,16 +6,7 @@
           <a-row>
             <slot name="left"></slot>
             <a-col v-if="isSearch">
-              <div :style="isSearch.style ? isSearch.style : 'width: 500px'"></div>
-              <a-textarea
-                v-model:value="searchInput"
-                placeholder="多条件查询：并集以'，'或'；'分隔；交集以'+'分隔"
-                allow-clear
-                :autoSize="{ minRows: 1, maxRows: 10 }"
-                :style="`position: absolute; z-index: 99; border-radius: 4px 0px 0px 4px;${
-                  isSearch.style ? isSearch.style : 'width: 500px'
-                }`"
-              />
+              <div style="width: 500px"></div>
             </a-col>
             <a-col v-if="isSearch">
               <a-button type="primary" @click="search" style="border-radius: 0px 4px 4px 0px">
@@ -68,7 +59,6 @@
   </div>
 </template>
 <script lang="ts">
-import { CloudDownloadOutlined, SearchOutlined } from '@ant-design/icons-vue';
 import { defineComponent, reactive, toRefs, computed, watchEffect, watch, ref, onMounted, PropType } from 'vue';
 import { useRoute } from 'vue-router';
 import { sortArrByKey } from '/@/utils/fun/common';
@@ -76,7 +66,7 @@ import XLSX from 'xlsx';
 
 export default defineComponent({
   name: 'DTable',
-  components: { CloudDownloadOutlined, SearchOutlined },
+  components: {},
   props: {
     rowKey: {
       type: [String, Function],
@@ -86,7 +76,7 @@ export default defineComponent({
       default: false,
     },
     isSearch: {
-      type: [Boolean, Object],
+      type: Boolean,
       default: false,
     },
     searchValue: {

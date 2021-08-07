@@ -1,7 +1,7 @@
 <template>
   <d-tab-view :list="list" :active="active"></d-tab-view>
 </template>
-<script lang="ts">
+<script>
 import { defineComponent, watchEffect, ref } from 'vue';
 import { useRoute } from 'vue-router';
 export default defineComponent({
@@ -17,7 +17,7 @@ export default defineComponent({
     ];
     const active = ref('');
     watchEffect(() => {
-      active.value = route.params?.type as string;
+      active.value = route.params?.type;
     });
     return {
       list,

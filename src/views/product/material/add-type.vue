@@ -1,7 +1,7 @@
 <template>
   <a-modal
     v-model:visible="visibleModal"
-    :title="isModify ? '修改' : '新增'"
+    :title="title"
     width="800px"
     cancelText="取消"
     okText="提交"
@@ -17,7 +17,7 @@
     </a-form>
   </a-modal>
 </template>
-<script lang="ts">
+<script>
 import { defineComponent, reactive, toRefs } from 'vue';
 import { addFun } from '/@/utils/operate/index';
 import { type } from './config';
@@ -48,6 +48,7 @@ export default defineComponent({
     const api = '/material/type';
     const formItem = reactive({});
     const ruleValidate = reactive({});
+    const title = props.isModify ? '修改' : '新增';
     type.forEach((item) => {
       const { title, dataIndex } = item;
       if (item.required) {
@@ -59,9 +60,8 @@ export default defineComponent({
     const { resetFields, validate, validateInfos } = useForm(formItem, ruleValidate);
 
     const { visibleModal, close, submit } = addFun(toRefs(props), emit, { resetFields, validate }, { formItem, api });
-
     return {
-      ...toRefs(props),
+      title,
       type,
       formItem,
       visibleModal,

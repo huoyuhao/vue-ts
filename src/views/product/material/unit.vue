@@ -4,7 +4,7 @@
       :loading="loading"
       :columns="columns"
       :data-source="data"
-      :rowKey="(record, index) => index"
+      :rowKey="rowKey"
       :isSearch="true"
     >
       <template #header>
@@ -34,7 +34,7 @@
     @update="update"
   />
 </template>
-<script lang="ts">
+<script>
 import { defineComponent, reactive, toRefs } from 'vue';
 import { product } from '/@/api/product/index';
 import { deleteFun } from '/@/utils/operate/index';
@@ -49,7 +49,7 @@ export default defineComponent({
       title: '物料单位',
       loading: false,
       data: [],
-      rowKey: '',
+      rowKey: 'materialUnitId',
       showModal: false,
       formData: null,
     });

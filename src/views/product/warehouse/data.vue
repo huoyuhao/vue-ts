@@ -4,7 +4,7 @@
       :loading="loading"
       :columns="columns"
       :data-source="data"
-      :rowKey="(record, index) => index"
+      :rowKey="rowKey"
       :isSearch="true"
     >
       <template #header>
@@ -49,7 +49,7 @@ export default defineComponent({
       title: '仓库',
       loading: false,
       data: [],
-      rowKey: '',
+      rowKey: 'warehouseId',
       showModal: false,
       formData: null,
     });

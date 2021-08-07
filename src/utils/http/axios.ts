@@ -1,6 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosInstance } from 'axios';
 // import { setToken, getToken, getTokenKey, removeToken, } from "./cookie";
-import qs from 'qs';
 
 import { addPending, removePending } from './pending';
 
@@ -52,7 +51,7 @@ export class Interceptors {
     this.instance = axios.create({
       baseURL: import.meta.env.VITE_API_BASE_URL as string,
       timeout: 30 * 1000,
-      withCredentials: true,
+      withCredentials: true, // 跨域请求
       headers: {
         'X-Requested-With': 'XMLHttpRequest',
         'Content-Type': 'application/json;',

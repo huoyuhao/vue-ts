@@ -5,7 +5,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import { defineComponent, toRefs, provide, ref, watch } from 'vue';
 import DTabList from './tab-list.vue';
 

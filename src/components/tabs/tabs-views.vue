@@ -38,7 +38,7 @@ export default defineComponent({
   setup(props) {
     const router = useRouter();
     const route = useRoute();
-    const current = ref({});
+    const current = ref({ key: '' });
     const component = shallowRef({});
     const componentObj = {};
     props.list.forEach((item) => {
